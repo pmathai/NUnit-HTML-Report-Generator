@@ -177,21 +177,22 @@ namespace Jatech.NUnit
             // Load summary values
             string testName = doc.Attribute("name").Value;
             int testTests = int.Parse(!string.IsNullOrEmpty(doc.Attribute("total").Value) ? doc.Attribute("total").Value : "0");
-            int testErrors = int.Parse(!string.IsNullOrEmpty(doc.Attribute("errors").Value) ? doc.Attribute("errors").Value : "0");
-            int testFailures = int.Parse(!string.IsNullOrEmpty(doc.Attribute("failures").Value) ? doc.Attribute("failures").Value : "0");
-            int testNotRun = int.Parse(!string.IsNullOrEmpty(doc.Attribute("not-run").Value) ? doc.Attribute("not-run").Value : "0");
+            //int testErrors = int.Parse(!string.IsNullOrEmpty(doc.Attribute("errors").Value) ? doc.Attribute("errors").Value : "0");
+            int testFailures = int.Parse(!string.IsNullOrEmpty(doc.Attribute("failed").Value) ? doc.Attribute("failed").Value : "0");
+            //int testNotRun = int.Parse(!string.IsNullOrEmpty(doc.Attribute("not-run").Value) ? doc.Attribute("not-run").Value : "0");
             int testInconclusive = int.Parse(!string.IsNullOrEmpty(doc.Attribute("inconclusive").Value) ? doc.Attribute("inconclusive").Value : "0");
-            int testIgnored = int.Parse(!string.IsNullOrEmpty(doc.Attribute("ignored").Value) ? doc.Attribute("ignored").Value : "0");
+            //int testIgnored = int.Parse(!string.IsNullOrEmpty(doc.Attribute("ignored").Value) ? doc.Attribute("ignored").Value : "0");
             int testSkipped = int.Parse(!string.IsNullOrEmpty(doc.Attribute("skipped").Value) ? doc.Attribute("skipped").Value : "0");
-            int testInvalid = int.Parse(!string.IsNullOrEmpty(doc.Attribute("invalid").Value) ? doc.Attribute("invalid").Value : "0");
-            DateTime testDate = DateTime.Parse(string.Format("{0} {1}", doc.Attribute("date").Value, doc.Attribute("time").Value));
-            string testPlatform = doc.Element("environment").Attribute("platform").Value;
+            //int testInvalid = int.Parse(!string.IsNullOrEmpty(doc.Attribute("invalid").Value) ? doc.Attribute("invalid").Value : "0");
+            //DateTime testDate = DateTime.Parse(string.Format("{0} {1}", doc.Attribute("start-time").Value, doc.Attribute("end-time").Value));
+            //string testPlatform = doc.Element("environment").Attribute("platform").Value;
 
             // Calculate the success rate
             decimal percentage = 0;
             if (testTests > 0)
             {
-                int failures = testErrors + testFailures;
+                //int failures = testErrors + testFailures;
+                int failures = testFailures;
                 percentage = decimal.Round(decimal.Divide(failures, testTests) * 100, 1);
             }
 
@@ -207,15 +208,15 @@ namespace Jatech.NUnit
 
             html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Tests</div><div class=\"val ignore-val\">{0}</div></div>", testTests));
             html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Failures</div><div class=\"val {1}\">{0}</div></div>", testFailures, testFailures > 0 ? "text-danger" : string.Empty));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Errors</div><div class=\"val {1}\">{0}</div></div>", testErrors, testErrors > 0 ? "text-danger" : string.Empty));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Not Run</div><div class=\"val {1}\">{0}</div></div>", testNotRun, testNotRun > 0 ? "text-danger" : string.Empty));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Errors</div><div class=\"val {1}\">{0}</div></div>", testErrors, testErrors > 0 ? "text-danger" : string.Empty));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Not Run</div><div class=\"val {1}\">{0}</div></div>", testNotRun, testNotRun > 0 ? "text-danger" : string.Empty));
             html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Inconclusive</div><div class=\"val {1}\">{0}</div></div>", testInconclusive, testInconclusive > 0 ? "text-danger" : string.Empty));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Ignored</div><div class=\"val {1}\">{0}</div></div>", testIgnored, testIgnored > 0 ? "text-danger" : string.Empty));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Ignored</div><div class=\"val {1}\">{0}</div></div>", testIgnored, testIgnored > 0 ? "text-danger" : string.Empty));
             html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Skipped</div><div class=\"val {1}\">{0}</div></div>", testSkipped, testSkipped > 0 ? "text-danger" : string.Empty));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Invalid</div><div class=\"val {1}\">{0}</div></div>", testInvalid, testInvalid > 0 ? "text-danger" : string.Empty));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Date</div><div class=\"val\">{0}</div></div>", testDate.ToString("d MMM")));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Time</div><div class=\"val\">{0}</div></div>", testDate.ToShortTimeString()));
-            html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Platform</div><div class=\"val\">{0}</div></div>", testPlatform));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Invalid</div><div class=\"val {1}\">{0}</div></div>", testInvalid, testInvalid > 0 ? "text-danger" : string.Empty));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Date</div><div class=\"val\">{0}</div></div>", testDate.ToString("d MMM")));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Time</div><div class=\"val\">{0}</div></div>", testDate.ToShortTimeString()));
+            //html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Platform</div><div class=\"val\">{0}</div></div>", testPlatform));
             html.AppendLine(string.Format("<div class=\"col-md-2 col-sm-4 col-xs-6 text-center\"><div class=\"stat\">Success Rate</div><div class=\"val\">{0}%</div></div>", 100 - percentage));
 
             // End summary panel
